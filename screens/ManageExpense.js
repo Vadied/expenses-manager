@@ -1,4 +1,4 @@
-const { Text } = require("react-native");
+import { Text } from "react-native";
 
 const ManageExpense = () => {
   return <Text>All Expenses</Text>;

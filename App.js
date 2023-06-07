@@ -2,6 +2,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
+import { Ionicons } from "@expo/vector-icons";
+
+import { colors } from "./constants/styles";
 
 import ManageExpense from "./screens/ManageExpense";
 import AllExpenses from "./screens/AllExpenses";
@@ -12,9 +15,36 @@ const BottomTabs = createBottomTabNavigator();
 
 const ExpensesOverview = () => {
   return (
-    <BottomTabs.Navigator>
-      <BottomTabs.Screen name="AllExpenses" component={AllExpenses} />
-      <BottomTabs.Screen name="RecentExpenses" component={RecentExpenses} />
+    <BottomTabs.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: colors.primary500 },
+        headerTintColor: "white",
+        tabBarStyle: { backgroundColor: colors.primary500 },
+        tabBarActiveTintColor: colors.accent500,
+      }}
+    >
+      <BottomTabs.Screen
+        name="RecentExpenses"
+        component={RecentExpenses}
+        options={{
+          title: "Recent Expenses",
+          tabBarLabel: "Recent",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="hourglass" color={color} size={size} />
+          ),
+        }}
+      />
+      <BottomTabs.Screen
+        name="AllExpenses"
+        component={AllExpenses}
+        options={{
+          title: "All Expenses",
+          tabBarLabel: "All",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="calendar" color={color} size={size} />
+          ),
+        }}
+      />
     </BottomTabs.Navigator>
   );
 };
@@ -25,7 +55,11 @@ export default function App() {
       <StatusBar style="auto" />
       <NavigationContainer>
         <Stacks.Navigator>
-          <Stacks.Screen name="ExpensesOverview" component={ExpensesOverview} />
+          <Stacks.Screen
+            name="ExpensesOverview"
+            component={ExpensesOverview}
+            options={{ headerShown: false }}
+          />
           <Stacks.Screen name="ManageExpense" component={ManageExpense} />
         </Stacks.Navigator>
       </NavigationContainer>

@@ -1,7 +1,8 @@
-const { Text } = require("react-native");
+import ExpensesOutput from "../components/ExpensesOutput";
+import { DUMMY_EXPS } from "../constants/dummy";
 
 const RecentExpenses = () => {
-  return <Text>All Expenses</Text>;
+  return <ExpensesOutput expenses={DUMMY_EXPS} period="7 days" />;
 };
 
 export default RecentExpenses;
