@@ -1,5 +1,6 @@
 import { Text, View, StyleSheet } from "react-native";
-import { colors } from "../constants/styles";
+
+import { colors } from "../../constants/styles";
 
 const ExpensesSummary = ({ expenses, period }) => {
   return (

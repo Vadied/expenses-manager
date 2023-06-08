@@ -1,4 +1,4 @@
-import ExpensesOutput from "../components/ExpensesOutput";
+import ExpensesOutput from "../components/expenses/ExpensesOutput";
 import { DUMMY_EXPS } from "../constants/dummy";
 
 const AllExpenses = () => {
