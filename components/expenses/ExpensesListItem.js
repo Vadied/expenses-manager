@@ -4,9 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../constants/styles";
 import { getFormattedDate } from "../../util/date";
 
-const ExpensesListItem = ({ description, date, amount }) => {
+const ExpensesListItem = ({ id, description, date, amount }) => {
   const navigation = useNavigation();
-  const handlePress = () => navigation.navigate("ManageExpense");
+  const handlePress = () =>
+    navigation.navigate("ManageExpense", { expenseId: id });
   return (
     <Pressable
       onPress={handlePress}

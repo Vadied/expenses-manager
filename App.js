@@ -9,7 +9,9 @@ import { colors } from "./constants/styles";
 import ManageExpense from "./screens/ManageExpense";
 import AllExpenses from "./screens/AllExpenses";
 import RecentExpenses from "./screens/RecentExpenses";
+
 import IconButton from "./components/ui/IconButton";
+import Context from "./components/ui/Context";
 
 const Stacks = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -62,16 +64,27 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
-      <NavigationContainer>
-        <Stacks.Navigator>
-          <Stacks.Screen
-            name="ExpensesOverview"
-            component={ExpensesOverview}
-            options={{ headerShown: false }}
-          />
-          <Stacks.Screen name="ManageExpense" component={ManageExpense} />
-        </Stacks.Navigator>
-      </NavigationContainer>
+      <Context>
+        <NavigationContainer>
+          <Stacks.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: colors.primary500 },
+              headerTintColor: "white",
+            }}
+          >
+            <Stacks.Screen
+              name="ExpensesOverview"
+              component={ExpensesOverview}
+              options={{ headerShown: false }}
+            />
+            <Stacks.Screen
+              name="ManageExpense"
+              component={ManageExpense}
+              options={{ presentation: "modal" }}
+            />
+          </Stacks.Navigator>
+        </NavigationContainer>
+      </Context>
     </>
   );
 }
