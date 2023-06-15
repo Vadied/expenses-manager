@@ -16,6 +16,9 @@ const ExpensesListItem = ({ id, description, date, amount }) => {
       <View style={styles.container}>
         <View>
           <Text style={[styles.textBase, styles.description]}>
+            {id}
+          </Text>
+          <Text style={[styles.textBase, styles.description]}>
             {description}
           </Text>
           <Text style={styles.textBase}>{getFormattedDate(date)}</Text>

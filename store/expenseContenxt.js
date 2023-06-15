@@ -5,15 +5,14 @@ const ExpenseContext = createContext({
   expenses: [],
   addExpense: ({ description, amount, date }) => {},
   deleteExpense: (id) => {},
-  updateExpense: (id, { description, amunt, date }) => {},
+  updateExpense: ({ id, description, amount, date }) => {},
 });
 
 export const ExpenseContextProvider = ({ children }) => {
   const [expenses, setExpenses] = useState(DUMMY_EXPS);
-  console.log(expenses)
 
   const addExpense = ({ description, amount, date }) => {
-    const id = `Es_${expenses.length}`;
+    const id = `Ex_${expenses.length}`;
     setExpenses((es) => [{ id, description, amount, date }, ...es]);
   };
 
@@ -21,10 +20,8 @@ export const ExpenseContextProvider = ({ children }) => {
     setExpenses((es) => es.filter((e) => e.id !== id));
   };
 
-  const updateExpense = (id, { description, amunt, date }) => {
-    setExpenses((es) =>
-      es.map((e) => (e.id !== id ? e : { ...e, description, amunt, date }))
-    );
+  const updateExpense = (expense) => {
+    setExpenses((es) => es.map((e) => (e.id !== expense.id ? e : expense)));
   };
 
   const value = { expenses, addExpense, deleteExpense, updateExpense };

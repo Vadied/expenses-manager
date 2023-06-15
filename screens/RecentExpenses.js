@@ -7,7 +7,7 @@ const RecentExpenses = () => {
   const today = new Date();
   const week = getDateMinusDays(today, 7);
   const filtered = expenses.filter((e) => e.date > week && e.date <= today);
-  return <ExpensesOutput expenses={filtered} period="7 days" />;
+  return <ExpensesOutput expenses={filtered} period="7 days" fallbackText="No expenses registered" />;
 };
 
 export default RecentExpenses;
