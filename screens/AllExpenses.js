@@ -1,7 +1,19 @@
 import ExpensesOutput from "../components/expenses/ExpensesOutput";
+import Loading from "../components/ui/Loading";
+import useExpenses from "../store/expenseContenxt";
 
-const AllExpenses = () => {
-  return <ExpensesOutput period="7 days" fallbackText="No registered expenses found!"/>;
+const RecentExpenses = () => {
+  const { expenses, loading } = useExpenses();
+
+  if (loading) return <Loading />;
+
+  return (
+    <ExpensesOutput
+      expenses={expenses}
+      period="All time"
+      fallbackText="No expenses registered"
+    />
+  );
 };
 
-export default AllExpenses;
+export default RecentExpenses;

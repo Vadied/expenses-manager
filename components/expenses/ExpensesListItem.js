@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { colors } from "../../constants/styles";
 import { getFormattedDate } from "../../util/date";
+import { getFormattedCurrency } from "../../util/currency";
 
 const ExpensesListItem = ({ id, description, date, amount }) => {
   const navigation = useNavigation();
@@ -16,15 +17,12 @@ const ExpensesListItem = ({ id, description, date, amount }) => {
       <View style={styles.container}>
         <View>
           <Text style={[styles.textBase, styles.description]}>
-            {id}
-          </Text>
-          <Text style={[styles.textBase, styles.description]}>
             {description}
           </Text>
           <Text style={styles.textBase}>{getFormattedDate(date)}</Text>
         </View>
         <View style={styles.amountContainer}>
-          <Text style={styles.amount}>{amount}</Text>
+          <Text style={styles.amount}>{getFormattedCurrency(amount)}</Text>
         </View>
       </View>
     </Pressable>

@@ -3,13 +3,14 @@ import { View, StyleSheet } from "react-native";
 
 import useExpenses from "../store/expenseContenxt";
 import { colors } from "../constants/styles";
+import { getFormattedDate } from "../util/date";
 
 import IconButton from "../components/ui/IconButton";
 import ExpenseForm from "../components/manage/ExpenseForm";
-import { getFormattedDate } from "../util/date";
+import Loading from "../components/ui/Loading";
 
 const ManageExpense = ({ route, navigation }) => {
-  const { expenses, addExpense, deleteExpense, updateExpense } = useExpenses();
+  const { expenses, loading, add, deleteData, update } = useExpenses();
   const { expenseId } = route.params || {};
 
   const expense = useMemo(() => {
@@ -39,7 +40,7 @@ const ManageExpense = ({ route, navigation }) => {
   }, [navigation, expenseId]);
 
   const handleDelete = () => {
-    deleteExpense(expenseId);
+    deleteData(expenseId);
     navigation.goBack();
   };
 
@@ -47,12 +48,14 @@ const ManageExpense = ({ route, navigation }) => {
     navigation.goBack();
   };
 
-  const handleSubmit = (newExpense) => {
-    if (!!expenseId) updateExpense({ ...newExpense, id: expenseId });
-    else addExpense(newExpense);
+  const handleSubmit = async (newExpense) => {
+    if (!!expenseId) await update(id, { ...newExpense });
+    else await add(newExpense);
 
     navigation.goBack();
   };
+
+  if (loading) return <Loading />;
 
   return (
     <View style={styles.container}>

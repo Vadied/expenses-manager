@@ -1,0 +1,1 @@
+export const FIREBASE_URL = "https://expense-manager-3981f-default-rtdb.europe-west1.firebasedatabase.app"

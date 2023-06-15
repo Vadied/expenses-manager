@@ -1,13 +1,31 @@
-import ExpensesOutput from "../components/expenses/ExpensesOutput";
 import useExpenses from "../store/expenseContenxt";
-import { getDateMinusDays } from "../util/date";
+import { getDateMinusDays, getFormattedDate } from "../util/date";
+
+import ExpensesOutput from "../components/expenses/ExpensesOutput";
+import Loading from "../components/ui/Loading";
+import ErrorOverlay from "../components/ui/ErrorOverlay";
 
 const RecentExpenses = () => {
-  const { expenses } = useExpenses();
+  const { expenses, loading, error } = useExpenses();
   const today = new Date();
   const week = getDateMinusDays(today, 7);
-  const filtered = expenses.filter((e) => e.date > week && e.date <= today);
-  return <ExpensesOutput expenses={filtered} period="7 days" fallbackText="No expenses registered" />;
+  const filtered = expenses.filter(
+    (e) =>
+      getFormattedDate(e.date) > getFormattedDate(week) &&
+      getFormattedDate(e.date) <= getFormattedDate(today)
+  );
+
+  if (loading) return <Loading />;
+
+  if (error) return <ErrorOverlay message={error} />;
+
+  return (
+    <ExpensesOutput
+      expenses={filtered}
+      period="7 days"
+      fallbackText="No expenses registered"
+    />
+  );
 };
 
 export default RecentExpenses;
