@@ -4,6 +4,7 @@ import { useState } from "react";
 import Input from "./Input";
 import Button from "../ui/Button";
 import { isDate } from "../../util/date";
+import FlatButton from "../ui/FlatButton";
 
 const ExpenseForm = ({ onSubmit, onCancel, expense, submitLabel }) => {
   const [data, setData] = useState(expense);
@@ -82,9 +83,9 @@ const ExpenseForm = ({ onSubmit, onCancel, expense, submitLabel }) => {
         }}
       />
       <View style={styles.buttons}>
-        <Button style={styles.button} mode="flat" onPress={onCancel}>
+        <FlatButton style={styles.button} onPress={onCancel}>
           Cancel
-        </Button>
+        </FlatButton>
         <Button style={styles.button} onPress={handleSubmit}>
           {submitLabel}
         </Button>

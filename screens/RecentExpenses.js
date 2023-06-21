@@ -3,10 +3,11 @@ import { getDateMinusDays, getFormattedDate } from "../util/date";
 
 import ExpensesOutput from "../components/expenses/ExpensesOutput";
 import Loading from "../components/ui/Loading";
-import ErrorOverlay from "../components/ui/ErrorOverlay";
 
 const RecentExpenses = () => {
-  const { expenses, loading, error } = useExpenses();
+  const { expenses, loading } = useExpenses();
+  if (loading) return <Loading />;
+
   const today = new Date();
   const week = getDateMinusDays(today, 7);
   const filtered = expenses.filter(
@@ -14,10 +15,6 @@ const RecentExpenses = () => {
       getFormattedDate(e.date) > getFormattedDate(week) &&
       getFormattedDate(e.date) <= getFormattedDate(today)
   );
-
-  if (loading) return <Loading />;
-
-  if (error) return <ErrorOverlay message={error} />;
 
   return (
     <ExpensesOutput

@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { Alert } from "react-native";
 
 import {
   deleteExpense,
@@ -6,6 +7,7 @@ import {
   addExpense,
   updateExpense,
 } from "../util/http";
+import useAuth from "./authContenxt";
 
 const ExpenseContext = createContext({
   expenses: [],
@@ -14,71 +16,68 @@ const ExpenseContext = createContext({
   deleteExpense: async (id) => {},
   updateExpense: async (id, data) => {},
   loading: false,
-  error: "",
-  clearError: () => {},
 });
 
 export const ExpenseContextProvider = ({ children }) => {
+  const { token } = useAuth();
+
+  console.log("token --->", token)
+
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [expenses, setExpenses] = useState([]);
 
   const getAll = async () => {
-    setError("");
     setLoading(true);
     try {
-      const data = await fetchExpenses();
+      const data = await fetchExpenses(token);
       setExpenses(data || []);
     } catch (error) {
       setExpenses([]);
-      setError("Error fetching all data");
+      Alert.alert("Error fetching all data", error.message);
     } finally {
       setLoading(false);
     }
   };
 
   const add = async (newExpense) => {
-    setError("");
     setLoading(true);
     try {
-      const id = await addExpense(newExpense);
+      const id = await addExpense(token, newExpense);
       setExpenses((es) => [{ ...newExpense, id }, ...es]);
     } catch (error) {
-      setError("Error saving data");
+      Alert.alert("Error saving data", error.message);
     } finally {
       setLoading(false);
     }
   };
 
   const deleteData = async (id) => {
-    setError("");
     setLoading(true);
     try {
-      await deleteExpense(id);
+      await deleteExpense(user.idToken, id);
       setExpenses((es) => es.filter((e) => e.id !== id));
     } catch (error) {
-      setError("Error deleting data");
+      Alert.alert("Error deleting all data", error.message);
     } finally {
       setLoading(false);
     }
   };
 
   const update = async (id, expense) => {
-    setError("");
     setLoading(true);
     try {
-      await updateExpense(id, expense);
+      await updateExpense(token, id, expense);
       setExpenses((es) => es.map((e) => (e.id !== id ? e : expense)));
     } catch (error) {
-      setError("Error updating data");
+      Alert.alert("Error updating all data", error.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const clearError = () => setError("");
-
   useEffect(() => {
+    if (!token) return;
+
     getAll();
   }, []);
 
@@ -88,8 +87,6 @@ export const ExpenseContextProvider = ({ children }) => {
     deleteData,
     update,
     loading,
-    error,
-    clearError,
   };
 
   return (
